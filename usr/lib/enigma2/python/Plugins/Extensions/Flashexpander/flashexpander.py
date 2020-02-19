@@ -4,16 +4,13 @@
 from Screens.Screen import Screen
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
-
 from Components.ActionMap import ActionMap
 from Components.MenuList import MenuList
 from Components.Harddisk import harddiskmanager, Harddisk
 from Components.Console import Console
 from Tools.Directories import createDir
 from Tools.BoundFunction import boundFunction
-
 from locale import _
-
 from enigma import quitMainloop
 from os import system, listdir, path, statvfs, rename, remove, popen as os_popen
 import re
@@ -229,7 +226,7 @@ class FEconf(Screen):
 			createDir(mp,True)
 		cmd = "mount " + dev + " " + mp
 		#print "[FlashExpander]",cmd
-		res = system(cmd)
+		res = Console().ePopen(cmd)
 		return (res >> 8)
 
 	def __checkMountPoint(self,mp):
@@ -274,7 +271,7 @@ class FEconf(Screen):
 				mounts = file('/etc/fstab').read().split('\n')
 				newlines = []
 				for x in mounts:
-					if x.startswith(devPath) or x.startswith("/dev/hdc1"):#/dev/hdc1 wegen 7025+
+					if x.startswith(devPath):
 						continue
 					if uuidPath and x.startswith(uuidPath):
 						continue
